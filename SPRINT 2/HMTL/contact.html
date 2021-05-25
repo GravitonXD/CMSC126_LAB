@@ -1,0 +1,71 @@
+<!-- CONTACT US PAGE -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nameless - Contact</title>
+    <link rel="icon" type="image/png" href="img_assets/favicon.png" />
+    <link rel="stylesheet" href="style.css">
+    <script src="validator.js"></script>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo">  <a href="home.html"> <img src="img_assets/header_logo.png"> </a> </div>
+        <div class="navigator">
+            <ul>
+                <li> <a href=home.html> HOME </a> </li>
+                <li> <a href=services.html> SERVICES </a> </li>
+                <li> <a href=about.html> ABOUT </a> </li>
+                <li class="active_list"> CONTACT </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- FORM -->
+    <div class="contact_form_wrapper">
+        <h1> CONTACT US FORM </h1>
+        <div id="error_message"> </div>
+
+        <form id="contact_form" onsubmit="return validator()">
+            <div class="input_field">
+                <label for="name"> <p class="form_label"> Name </p> </label>
+                <input type="text" placeholder="Enter Full Name" id="name">
+            </div>
+            <div class="input_field">
+                <label for="e_mail"> <p class="form_label"> E-mail </p> </label>
+                <input type="text" placeholder="Enter E-mail Address" id="e_mail">
+            </div>
+            <div class="input_field">
+                <label for="topic_request"> <p class="form_label"> Subject </p> </label>
+                <input type="text" placeholder="Enter Topic of Request" id="topic_request">
+            </div>
+            <div class="input_field">
+                <label for="service"> <p class="form_label"> Services </p> </label>
+                <input type="text" placeholder="Enter Service (Mobile App or Web Development)" id="service">
+            </div>
+            <div class="input_field">
+                <label for="message"> <p class="form_label"> Message </p> </label>
+                <textarea id="message" placeholder="Enter Message" rows="10"> </textarea>
+            </div>
+            <div class="button">
+                <input type="submit">
+            </div>
+        </form>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer>
+        <p class='footer_text'>FOLLOW US</p>
+        <ul>
+            <li> <a href="https://www.facebook.com/" target="_blank"> <img src="img_assets/logo1.png"> </a> </li>
+            <li> <a href="https://www.instagram.com/" target="_blank"> <img src="img_assets/logo2.png"> </a> </li>
+            <li> <a href="https://www.twitter.com/" target="_blank"> <img src="img_assets/logo3.png"> </a></li>
+        </ul>
+    </footer>
+</body>
+</html>
