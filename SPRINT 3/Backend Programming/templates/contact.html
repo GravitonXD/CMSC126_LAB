@@ -1,0 +1,178 @@
+<!-- CONTACT US PAGE -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nameless - Contact</title>
+    <link rel="icon" type="image/png" href="{% static 'img_assets/favicon.png' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo">  <a href="{% url 'home' %}"> <img src="{% static 'img_assets/header_logo.png' %}"> </a> </div>
+        <div class="navigator">
+            <ul>
+                <li> <a href="{% url 'home' %}"> HOME </a> </li>
+                <li> <a href="{% url 'services' %}"> SERVICES </a> </li>
+                <li> <a href="{% url 'about' %}"> ABOUT </a> </li>
+                <li class="active_list"> CONTACT </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- FORM -->
+    <div class="contact_form_wrapper">
+        <h1> CONTACT US FORM </h1>
+        <div id="error_message"> </div>
+
+        <form id="contact_form"> {% csrf_token %}
+            <div class="input_field">
+                <label for="name"> <p class="form_label"> Name </p> </label>
+                <input type="text" placeholder="Enter Full Name" id="name">
+            </div>
+            <div class="input_field">
+                <label for="e_mail"> <p class="form_label"> E-mail </p> </label>
+                <input type="text" placeholder="Enter E-mail Address" id="e_mail">
+            </div>
+            <div class="input_field">
+                <label for="topic_request"> <p class="form_label"> Subject </p> </label>
+                <input type="text" placeholder="Enter Topic of Request" id="topic_request">
+            </div>
+            <div class="input_field">
+                <label for="service"> <p class="form_label"> Services </p> </label>
+                <input type="text" placeholder="Enter Service (Mobile App or Web Development)" id="service">
+            </div>
+            <div class="input_field">
+                <label for="message"> <p class="form_label"> Message </p> </label>
+                <textarea id="message" placeholder="Enter Message" rows="10"> </textarea>
+            </div>
+            <div class="button">
+                <input type="submit" />
+            </div>
+        </form>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer>
+        <p class='footer_text'>FOLLOW US</p>
+        <ul>
+           <li> <a href="https://www.facebook.com/" target="_blank"> <img src="{% static 'img_assets/logo1.png' %}"> </a> </li>
+                <li> <a href="https://www.instagram.com/" target="_blank"> <img src="{% static 'img_assets/logo2.png' %}"> </a> </li>
+                <li> <a href="https://www.twitter.com/" target="_blank"> <img src="{% static 'img_assets/logo3.png' %}"> </a></li>
+        </ul>
+    </footer>
+</body>
+
+<!-- SCRIPT FOR SAVING DETAILS ON DATABASE -->
+<script type="text/javascript">
+    // sets the style to show the error message in the website
+    function error(x){
+    x.style.padding = "15px";
+    x.style.backgroundColor = "#EF4423";
+    x.style.color = "#fff";
+    x.style.borderRadius = "15px";
+    }
+
+    // sets the style to show the successful submisison of form message in the website
+    function no_error(x){
+    x.style.padding = "15px";
+    x.style.backgroundColor = "#74C378";
+    x.style.color = "#fff";
+    x.style.borderRadius = "15px";
+    x.innerHTML = "Submitted Successfully";
+    }
+
+    // function that validates the entry in the contact us form
+    function validator() {
+    // initializes variable names and assigns their value to corresponding entry in the html form
+        var name = document.getElementById("name").value;
+        var e_mail = document.getElementById("e_mail").value;
+        var subject = document.getElementById("topic_request").value;
+        var service = document.getElementById("service").value;
+        var message = document.getElementById("message").value;
+        var submission_message = document.getElementById("error_message");
+           
+        /* 
+            Different validation statements
+        */
+
+        // name should have character length greater than 10
+        if(name.length < 10) {
+            error(submission_message);
+            submission_message.innerHTML = "Please Enter a Valid Full Name";
+            return false;
+        }
+
+        // valid e-mail should contain "@" and ".com", and should exceed 5 char length
+        if(((e_mail.indexOf("@") && e_mail.indexOf(".com") == -1) && (e_mail.length < 5))) {
+            error(submission_message);
+            submission_message.innerHTML = "Please Enter a Valid E-mail Address";
+            return false;
+        }
+
+        // subject should have character length greater than 5
+        if(subject.length < 5) {
+            error(submission_message);
+            submission_message.innerHTML = "Please Enter a Valid Subject";
+            return false;
+        }
+
+        // checks if the entry is either of the three possible valid entry, else error is shown
+        if(service.toUpperCase() == "MOBILE APP" || service.toUpperCase() == "WEBSITE" || service.toUpperCase() == "BOTH"){
+        } else {
+            error(submission_message);
+            submission_message.innerHTML = "Please Enter a 'Mobile App' or 'Website' or 'Both' in Services";
+            return false;
+        }
+
+        // message should have character length greater than 20
+        if(message.length < 20) {
+            error(submission_message);
+            submission_message.innerHTML = "Please Enter a Valid Message with atleast 20 characters";
+            return false;
+        }
+
+        // If there are already no error then no_error function
+        no_error(submission_message);
+        return true;
+    }
+
+    function refreshPage() {
+        location.reload(true);
+    }
+
+    // Process the data to be saved in the database under django app (contact_forms)
+    $(document).on('submit', '#contact_form', function(event) {
+        // Prevents the page reloading
+        event.preventDefault();
+
+        if(validator()) {
+            // AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'contact_form/create',
+                data: {
+                    name:$('#name').val(),
+                    e_mail:$('#e_mail').val(),
+                    subject:$('#topic_request').val(),
+                    service:$('#service').val(),
+                    message:$('#message').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success:function() {
+                    setInterval('refreshPage()', 500);
+                }
+            });
+        }
+    });
+
+</script>
+
+</html>

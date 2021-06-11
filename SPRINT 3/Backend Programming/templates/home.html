@@ -1,0 +1,42 @@
+<!-- HOME PAGE -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="{% static 'img_assets/favicon.png' %}" />
+        <title>Nameless Organization</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        
+    </head>
+    <body>
+        <header>
+            <div class="logo">  <a href="{% url 'home' %}"> <img src="{% static 'img_assets/header_logo.png' %}"> </a> </div>
+            <div class="navigator">
+                <ul>
+                    <li class="active_list"> HOME </li>
+                    <li> <a href={% url 'services' %}> SERVICES </a> </li>
+                    <li> <a href="{% url 'about' %}"> ABOUT </a> </li>
+                    <li> <a href="{% url 'contact' %}"> CONTACT </a> </li>
+                </ul>
+            </div>
+        </header>
+    
+        <div>
+            <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_HX0isy.json"  background="transparent"  speed="1"  style="width: 300; height: 300;"  loop  autoplay></lottie-player>
+        </div>
+        
+        <footer>
+            <p class='footer_text'>FOLLOW US</p>
+            <ul>
+                <li> <a href="https://www.facebook.com/" target="_blank"> <img src="{% static 'img_assets/logo1.png' %}"> </a> </li>
+                <li> <a href="https://www.instagram.com/" target="_blank"> <img src="{% static 'img_assets/logo2.png' %}"> </a> </li>
+                <li> <a href="https://www.twitter.com/" target="_blank"> <img src="{% static 'img_assets/logo3.png' %}"> </a></li>
+            </ul>
+        </footer>
+    </body>
+</html>
